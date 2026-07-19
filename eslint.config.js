@@ -50,7 +50,13 @@ export default [
     },
   },
   {
-    files: ['vite.config.ts', 'playwright.config.ts', 'eslint.config.js'],
+    files: [
+      'vite.config.ts',
+      'vitest.config.ts',
+      'playwright.config.ts',
+      'playwright.preview.config.ts',
+      'eslint.config.js',
+    ],
     languageOptions: {
       parser: tsparser,
       parserOptions: {

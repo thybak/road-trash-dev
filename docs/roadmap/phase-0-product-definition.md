@@ -32,7 +32,19 @@ A one-page specification describes one complete race, and every first-playable m
 
 ## Evidence log
 
-- [ ] Contract reviewed by the project owner.
-- [ ] Open questions accepted as playtest questions rather than hidden implementation choices.
-- [ ] Relevant decisions recorded.
+- [x] Contract reviewed by the project owner.
+- [x] Open questions accepted as playtest questions rather than hidden implementation choices.
+- [x] Relevant decisions recorded.
+
+## Closure note
+
+Phase 0 is considered closed on 2026-07-19. The five paper scenarios required by the task order were walked against `docs/PHASE-0-GAME-CONTRACT.md`:
+
+1. Close finish — both riders reach the line within the target duration; success rule and per-rider finish-time display are non-contradictory.
+2. One trailing rider — biased-average shared camera keeps both visible in the 0–45 m band; trailing-rider catch-up is bounded by the separation table.
+3. Simultaneous crash — each rider has independent `health`/`stunRemainingS`; recovery targets 1–2 s and is followed by brief invulnerability; no shared crash-coupling is implied.
+4. Timer expiry — failure via team timer or shared recovery allowance; both are configurable and disabled for the earliest technical slices per the contract note. No rule overlap with success.
+5. Restart after focus loss — the contract requires one-action restart without page reload; `ARCHITECTURE.md` already mandates scene-shutdown input clearing and a fresh session state on restart, which together cover post-focus-loss sticky keys.
+
+No contradictions surfaced. The five open playtest questions in the contract remain unanswered by design; they will be resolved by Phase 3+ playtest evidence, not implementation convenience. Phase 1 may now begin.
 

@@ -4,30 +4,30 @@ const isCI = !!process.env.CI;
 
 export default defineConfig({
   testDir: 'tests/e2e',
-  testMatch: /.*\.spec\.ts$/,
+  testMatch: /preview-smoke\.spec\.ts$/,
   fullyParallel: true,
   forbidOnly: isCI,
   retries: isCI ? 1 : 0,
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: [['list'], ['html', { open: 'never', outputFolder: 'playwright-report-preview' }]],
   use: {
-    baseURL: 'http://127.0.0.1:5173',
+    baseURL: 'http://127.0.0.1:5174',
     trace: 'on-first-retry',
   },
   projects: [
     {
-      name: 'chromium',
+      name: 'chromium-preview',
       use: { ...devices['Desktop Chrome'] },
     },
     {
-      name: 'firefox',
+      name: 'firefox-preview',
       use: { ...devices['Desktop Firefox'] },
     },
   ],
   webServer: {
-    command: 'pnpm dev --host 0.0.0.0 --port 5173',
-    url: 'http://127.0.0.1:5173',
+    command: 'pnpm build && pnpm exec vite preview --host 0.0.0.0 --port 5174',
+    url: 'http://127.0.0.1:5174',
     reuseExistingServer: !isCI,
-    timeout: 120_000,
+    timeout: 180_000,
   },
   ...(isCI ? { workers: 1 } : {}),
 });

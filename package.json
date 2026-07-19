@@ -18,8 +18,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:e2e:boot": "playwright test tests/e2e/boot.spec.ts",
     "test:e2e:preview": "playwright test --config playwright.preview.config.ts",
-    "verify": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm test:e2e && pnpm test:e2e:preview"
+    "verify": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm test:e2e && pnpm test:e2e:preview",
+    "verify:change": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm test:e2e:boot"
   },
   "dependencies": {
     "phaser": "4.2.1"

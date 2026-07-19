@@ -74,6 +74,20 @@ Use this lightweight format for material choices. Append entries; do not rewrite
 - Reason: Phase 1 validates shared-keyboard reliability, not gameplay truth. Building a partial authoritative state now risks the lab accidentally looking like simulation truth before the Vehicle system and `RiderState` exist in Phase 2.
 - Consequences: Phase 2 introduces real `RiderState`, the Vehicle system, and a snapshot-based presenter, removing or rewriting `PlaceholderPresenter` without ceremony. Reviewers must not treat Phase 1 placeholder positions as authoritative state.
 
+## ADR-010 — Routine changes run only the deterministic core suite; browser smoke moves to phase/release gating
+
+- Status: accepted
+- Date: 2026-07-19
+- Decision: The default per-change merge gate runs formatting/linting, TypeScript type checking, the deterministic core (unit) test suite, and the production build. Playwright smoke tests across Chromium and Firefox, plus structured manual playtesting, run at phase boundaries and before playable releases rather than on every change.
+- Reason: The MVP's primary regression risk is the small set of deterministic gameplay rules and state transitions. A small focused suite protects them. Running the full browser smoke and playtest matrix on every small change added noise and slowed iteration without catching proportionate defects, since rendering, audio, and game feel are validated through manual playtests anyway.
+- Consequences: Constitution §8's routine gate is softened to core tests, type checks, build, and a quick manual try of the affected feature. `TESTING.md` documents the two-tier gate (routine vs release) and the 80/20 testing strategy. Smoke and manual playtest evidence still must be recorded before a phase exits or a release ships. Supersedes the per-change smoke wording previously in §8 only.
+
+### Refinement 2026-07-19 — A boot tripwire rejoins the per-change gate
+
+- Decision: A small, fast boot-only smoke (`pnpm test:e2e:boot`, the existing `tests/e2e/boot.spec.ts`) is added back to the per-change gate, running in Chromium and Firefox alongside the core suite, type checks, and build.
+- Reason: Dropping all per-change browser coverage left no early signal when a change broke boot, asset loading, or Phaser/Vite integration. The boot tripwire is the cheapest deterministic-ish browser check and catches the regressions most likely to be silent until a phase gate.
+- Consequences: Constitution §8 routine gate now lists the boot tripwire explicitly. `TESTING.md` splits browser smoke into "Boot tripwire (per change)" and "Full smoke (phase/release)". `package.json` gains `test:e2e:boot` and `verify:change`. The heavier smoke (`pnpm test:e2e`) and preview-production smoke (`pnpm test:e2e:preview`) still run only at phase/release gates via `pnpm verify`.
+
 ## ADR template
 
 ```markdown

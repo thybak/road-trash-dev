@@ -95,10 +95,12 @@ Every change must be proportionately verified. The default merge gate is:
 
 - Formatting and linting pass.
 - TypeScript type checking passes.
-- Relevant unit tests pass.
+- The deterministic core test suite passes.
 - Production build succeeds.
-- Relevant Playwright smoke tests pass in Chromium and Firefox.
-- Manual playtest evidence is recorded for feel, readability, shared-camera comfort, and physical key combinations when applicable.
+- The boot tripwire smoke (`pnpm test:e2e:boot`) passes in Chromium and Firefox.
+- The affected feature is manually tried when applicable.
+
+The broader Playwright smoke beyond boot, plus structured manual playtesting for feel, readability, shared-camera comfort, and physical key combinations, runs at phase boundaries and before playable releases rather than on every change.
 
 A phase completes only when its exit criterion is demonstrated, not when its checklist is merely implemented.
 

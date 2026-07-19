@@ -58,11 +58,13 @@ pnpm typecheck
 pnpm lint
 pnpm test
 pnpm test:e2e
+pnpm test:e2e:boot
 pnpm build
+pnpm verify:change
 pnpm verify
 ```
 
-`pnpm verify` should run the normal local quality gate in a stable order. Browser-specific debugging may use focused Playwright projects, for example `pnpm exec playwright test --project=firefox`.
+`pnpm verify:change` runs the routine per-change gate (typecheck, lint, deterministic core tests, build, boot tripwire smoke). `pnpm verify` runs the full release gate, adding the broader browser smoke and the preview-production smoke. Browser-specific debugging may use focused Playwright projects, for example `pnpm exec playwright test --project=firefox`.
 
 ## Change discipline
 

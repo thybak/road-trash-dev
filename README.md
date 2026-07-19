@@ -2,6 +2,17 @@
 
 This documentation pack turns the initial game-development plan into a working contract for humans and AI coding agents.
 
+## Quick start (Fedora host)
+
+```bash
+sudo dnf install distrobox podman
+./scripts/bootstrap.sh
+distrobox enter road-trash-dev
+pnpm dev --host 0.0.0.0
+```
+
+Open the printed local URL in Firefox or Chromium on the Fedora desktop. The bootstrap script is idempotent and safe to re-run; see [`docs/DEVELOPMENT-ENVIRONMENT.md`](docs/DEVELOPMENT-ENVIRONMENT.md) for what it automates.
+
 ## Start here
 
 1. Read [`AGENTS.md`](AGENTS.md) for the repository workflow.

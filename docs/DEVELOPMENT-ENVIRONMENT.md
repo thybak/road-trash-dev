@@ -8,6 +8,19 @@ Ubuntu 24.04 is chosen because current Playwright supports it directly and suppl
 
 The source tree remains in the Fedora user's home directory and is visible inside Distrobox. Runtime packages, pnpm, Node, Playwright browser binaries, and build dependencies are installed from inside the guest. Distrobox is integrated rather than strongly isolated, so do not treat it as a security sandbox.
 
+## Bootstrap script
+
+The recommended path for a new developer on a Fedora host is to run the idempotent bootstrap script from the repository root:
+
+```bash
+sudo dnf install distrobox podman
+./scripts/bootstrap.sh
+```
+
+The script creates the `road-trash-dev` box if it is absent, installs mise + Node (pinned in `.mise.toml` and `.node-version`), activates pnpm via Corepack from `package.json#packageManager`, runs `pnpm install`, installs Playwright browsers with `--with-deps`, and runs `pnpm verify` as a final validation. It is safe to re-run: an existing box is reused, and apt/mise/corepack/pnpm/playwright steps are naturally idempotent.
+
+The remaining sections document what the script automates. Follow them manually only when debugging a specific step or recreating the box from scratch.
+
 ## Host prerequisites on Fedora
 
 ```bash

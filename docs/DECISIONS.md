@@ -50,6 +50,14 @@ Use this lightweight format for material choices. Append entries; do not rewrite
 - Reason: It is a Distrobox-tested guest and a directly supported Playwright platform, minimizing browser dependency friction.
 - Consequences: The project gains a clean dependency boundary but not a security boundary because Distrobox integrates the home directory and desktop session.
 
+## ADR-007 — Use Mise for Node, Corepack for pnpm inside the Distrobox
+
+- Status: accepted
+- Date: 2026-07-19
+- Decision: Pin Node 24 via `.mise.toml` and `.node-version` (exact patch release) and let mise manage Node inside the box. Activate pnpm from `package.json#packageManager` via Corepack (`corepack enable && corepack install`).
+- Reason: Developer preference for mise as the unified Node version manager across hosts, combined with the existing `DEVELOPMENT-ENVIRONMENT.md` guidance to prefer Corepack for pnpm so the pnpm version stays coupled to the committed `package.json`.
+- Consequences: `.mise.toml` and `.node-version` must stay in sync for the same Node version. Upgrading pnpm means editing `packageManager` and re-running `corepack install`, not a global install. The bootstrap script relies on both tools being present in the box (mise auto-installs itself; Corepack ships with Node 24).
+
 ## ADR template
 
 ```markdown

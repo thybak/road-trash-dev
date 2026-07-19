@@ -11,6 +11,9 @@ export interface DebugSnapshot {
   readonly releasedCodes: readonly string[];
   readonly p1AttackedThisFrame: boolean;
   readonly p2AttackedThisFrame: boolean;
+  readonly phase?: string;
+  readonly finishTimeS?: number;
+  readonly riderProgressM?: number;
 }
 
 export interface AttackEdgeLatch {
@@ -68,6 +71,9 @@ export function installDebugProbe(): DebugProbe {
       clear: () => {},
       consumeAttackEdges: () => ({ p1: false, p2: false }),
     } satisfies DebugProbe;
+  }
+  if (window.roadTrashDebug) {
+    return window.roadTrashDebug;
   }
   const probe = new BrowserDebugProbe();
   window.roadTrashDebug = probe;

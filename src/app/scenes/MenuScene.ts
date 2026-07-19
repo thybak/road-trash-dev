@@ -85,14 +85,12 @@ export class MenuScene extends Phaser.Scene {
       });
     });
 
-    this.add.text(40, 180, this.describeBindings(), BODY_STYLE).setOrigin(0, 0);
-
     this.stateLabel = this.add
       .text(width - 40, 80, this.describeAudioState(), BODY_STYLE)
       .setOrigin(1, 0);
 
     this.actionPanel = this.add
-      .text(40, 220, this.buildActionPanel(), BODY_STYLE)
+      .text(40, 180, this.buildActionPanel(), BODY_STYLE)
       .setOrigin(0, 0);
 
     this.rawCodePanel = this.add
@@ -112,6 +110,14 @@ export class MenuScene extends Phaser.Scene {
     ).setStrokeStyle(1, 0x606060, 0.5);
 
     this.presenter = new PlaceholderPresenter(this, bounds);
+
+    this.add
+      .text(width / 2, height - 70, 'Start Race', BUTTON_STYLE)
+      .setOrigin(0.5, 0)
+      .setStyle({ backgroundColor: '#6c6' })
+      .setPadding(8)
+      .setInteractive({ useHandCursor: true })
+      .on('pointerup', () => this.scene.start('RaceScene'));
 
     this.flashLabel = this.add
       .text(width / 2, height - 32, '', BODY_STYLE)
@@ -194,14 +200,6 @@ export class MenuScene extends Phaser.Scene {
 
   private describePreset(): string {
     return `Preset: ${DEFAULT_PRESET.label} (${DEFAULT_PRESET.deviceKind}, ${DEFAULT_PRESET.id}) — a second (gamepad) preset is scheduled for Phase 6.`;
-  }
-
-  private describeBindings(): string {
-    const lines: string[] = ['Bindings:'];
-    for (const b of DEFAULT_PRESET.bindings) {
-      lines.push(`  ${b.playerId === 'shared' ? 'shared' : b.playerId.toUpperCase()} ${b.action} → ${b.code}`);
-    }
-    return lines.join('\n');
   }
 
   private describeAudioState(): string {

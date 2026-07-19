@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { PreloadScene } from './scenes/PreloadScene';
 import { MenuScene } from './scenes/MenuScene';
+import { RaceScene } from './scenes/RaceScene';
 
 export function createGameConfig(parent: HTMLElement): Phaser.Types.Core.GameConfig {
   return {
@@ -13,6 +14,6 @@ export function createGameConfig(parent: HTMLElement): Phaser.Types.Core.GameCon
       width: '100%',
       height: '100%',
     },
-    scene: [BootScene, PreloadScene, MenuScene],
+    scene: [BootScene, PreloadScene, MenuScene, RaceScene],
   };
 }

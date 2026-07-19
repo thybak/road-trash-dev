@@ -88,6 +88,14 @@ Use this lightweight format for material choices. Append entries; do not rewrite
 - Reason: Dropping all per-change browser coverage left no early signal when a change broke boot, asset loading, or Phaser/Vite integration. The boot tripwire is the cheapest deterministic-ish browser check and catches the regressions most likely to be silent until a phase gate.
 - Consequences: Constitution §8 routine gate now lists the boot tripwire explicitly. `TESTING.md` splits browser smoke into "Boot tripwire (per change)" and "Full smoke (phase/release)". `package.json` gains `test:e2e:boot` and `verify:change`. The heavier smoke (`pnpm test:e2e`) and preview-production smoke (`pnpm test:e2e:preview`) still run only at phase/release gates via `pnpm verify`.
 
+## ADR-011 — Phase 2 pseudo-3D road prototype scope and simplifications
+
+- Status: accepted
+- Date: 2026-07-19
+- Decision: Phase 2 implements a single-rider pseudo-3D road slice using a fixed 60 Hz simulation, a current-snapshot renderer (no interpolation), a single chase camera, and a finish-line overlay only. Two riders, traffic, AI, combat, pickups, results scene, pause flow, and final art are explicitly deferred.
+- Reason: The Phase 2 primary risk is whether the projection and movement feel convincing, so the slice must be the smallest vertical cut that answers that question. A single rider removes shared-camera and separation risk (Phase 3). Skipping interpolation avoids extra state history and alpha blending before the core feel is judged. A finish-line overlay (not a results scene) is enough to demonstrate a completable course.
+- Consequences: `RaceSession` owns one `RiderState`; the renderer draws the current authoritative snapshot; the camera follows the single rider. `Phase 2` evidence is recorded in `docs/roadmap/phase-2-road-prototype.md`. Phase 3 will add the second rider, shared biased-average camera, separation rules, collisions, pause, and a proper results/restart flow. Phase 6 will add final art and interpolation if playtest evidence justifies it.
+
 ## ADR template
 
 ```markdown

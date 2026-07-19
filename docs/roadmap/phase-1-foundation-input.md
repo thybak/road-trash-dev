@@ -41,9 +41,9 @@ Two players simultaneously control placeholders in real Firefox and Chromium wit
 - [x] `pnpm verify` passes.
 - [x] Chromium Playwright project passes.
 - [x] Firefox Playwright project passes.
-- [ ] Real Firefox manual test recorded.
-- [ ] Real Chromium manual test recorded.
-- [ ] Physical keyboard combinations recorded.
+- [x] Real Firefox manual test recorded.
+- [x] Real Chromium manual test recorded.
+- [x] Physical keyboard combinations recorded.
 
 ## Automated evidence captured on 2026-07-19
 
